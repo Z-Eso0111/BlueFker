@@ -12,12 +12,20 @@ frame.Position = UDim2.new(0, 10, 0.5, 0)
 frame.BackgroundColor3 = Color3.new(0, 0, 0)
 frame.BackgroundTransparency = 0.5
 
+local textButton = Instance.new("TextBox")
+textButton.Parent = frame
+textButton.Size = UDim2.new(1, 0.5, 0.5, 1)
+textButton.Position = UDim2.new(0, 0, 1, 0)
+textButton.Text = "https://discord.gg/tNE3NYYzwP"
+textButton.PlaceholderText = "https://discord.gg/tNE3NYYzwP"
+textButton.ClearTextOnFocus = false
+
 local textBox = Instance.new("TextBox")
 textBox.Parent = frame
 textBox.Size = UDim2.new(0.8, 0, 0.2, 0)
 textBox.Position = UDim2.new(0.1, 0, 0.1, 0)
 textBox.Text = ""
-textBox.PlaceholderText = "Kodu girin..."
+textBox.PlaceholderText = "Key"
 textBox.ClearTextOnFocus = false
 
 local enterButton = Instance.new("TextButton")
