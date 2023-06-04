@@ -1,0 +1,64 @@
+local gui = Instance.new("ScreenGui")
+gui.Parent = game.Players.LocalPlayer.PlayerGui
+
+gui.Enabled = true
+gui.DisplayOrder = 999
+gui.ResetOnSpawn = false
+
+local frame = Instance.new("Frame")
+frame.Parent = gui
+frame.Size = UDim2.new(0, 200, 0, 100)
+frame.Position = UDim2.new(0, 10, 0.5, 0)
+frame.BackgroundColor3 = Color3.new(0, 0, 0)
+frame.BackgroundTransparency = 0.5
+
+local isRepeating = false
+
+local onButton = Instance.new("TextButton")
+onButton.Parent = frame
+onButton.Size = UDim2.new(0.4, 0, 0.3, 0)
+onButton.Position = UDim2.new(0.1, 0, 0.35, 0)
+onButton.Text = "On"
+onButton.MouseButton1Click:Connect(function()
+    if not isRepeating then
+        isRepeating = true
+        while isRepeating do
+            for _, proximityPrompt in pairs(game.Workspace:GetDescendants()) do
+                if proximityPrompt:IsA("ProximityPrompt") then
+                    proximityPrompt.MaxActivationDistance = 9999999827968
+                    proximityPrompt.HoldDuration = 0
+                end
+            end
+            wait(0.5)
+        end
+    end
+end)
+
+local offButton = Instance.new("TextButton")
+offButton.Parent = frame
+offButton.Size = UDim2.new(0.4, 0, 0.3, 0)
+offButton.Position = UDim2.new(0.5, 0, 0.35, 0)
+offButton.Text = "Off"
+offButton.MouseButton1Click:Connect(function()
+    isRepeating = false -- Tekrarlamayı durdur
+    for _, proximityPrompt in pairs(game.Workspace:GetDescendants()) do
+        if proximityPrompt:IsA("ProximityPrompt") then
+            proximityPrompt.MaxActivationDistance = 5
+            proximityPrompt.HoldDuration = 0.5
+        end
+    end
+end)
+
+
+while true do
+    for _, instance in ipairs(game:GetDescendants()) do
+        if instance:IsA("ValueBase") then
+            if instance.Name == "Current" then
+                instance.Value = 9000000000 -- Current değerini 9 trilyon yapar
+            elseif instance.Name == "Mana" then
+                instance.Value = 8000000000 -- Mana değerini 8 trilyon yapar
+            end
+        end
+    end
+    wait(1)
+end
