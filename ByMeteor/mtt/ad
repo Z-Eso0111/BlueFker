@@ -10,3 +10,91 @@ while true do
     end
     wait(0.3)
 end
+
+-- Gui oluşturma
+local gui = Instance.new("ScreenGui")
+gui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+-- Gui ayarları
+local frame = Instance.new("Frame")
+frame.Size = UDim2.new(0, 150, 0, 50)
+frame.Position = UDim2.new(1, -200, 0, 100)
+frame.BackgroundColor3 = Color3.new(0, 0, 0)
+frame.BackgroundTransparency = 0.5
+frame.Parent = gui
+
+local button = Instance.new("TextButton")
+button.Text = "On"
+button.Size = UDim2.new(0, 50, 0, 50)
+button.Position = UDim2.new(1, -50, 0, 0)
+button.Parent = frame
+
+-- Fonksiyonlar
+local function SetDamageHighlights()
+    -- Oyuncuların içindeki DamageHighlight ayarları
+    local players = game.Players:GetPlayers()
+    for _, player in ipairs(players) do
+        local character = player.Character
+        if character then
+            local damageHighlight = character:FindFirstChild("DamageHighlight")
+            if damageHighlight then
+                damageHighlight.OutlineTransparency = 0
+                damageHighlight.DepthMode = "AlwaysOnTop"
+            end
+        end
+    end
+end
+
+local function SetSpawnedMobsDamageHighlights()
+    -- SpawnedMobs içindeki DamageHighlight ayarları
+    local spawnedMobs = game.Workspace.SpawnedMobs:GetChildren()
+    for _, mob in ipairs(spawnedMobs) do
+        local damageHighlight = mob:FindFirstChild("DamageHighlight")
+        if damageHighlight then
+            damageHighlight.OutlineTransparency = 0
+            damageHighlight.DepthMode = "AlwaysOnTop"
+            damageHighlight.OutlineColor = Color3.new(12, 255, 48)
+        end
+    end
+end
+
+local function SetSpecialCharactersDamageHighlights()
+    -- Belirli karakterlerin DamageHighlight ayarları
+    local specialCharacters = {
+        "MAD JESTER",
+        "MIRROH",
+        "Lmnus",
+        "Liar of Dreams"
+    }
+    for _, characterName in ipairs(specialCharacters) do
+        local character = game.Workspace:FindFirstChild(characterName)
+        if character then
+            local damageHighlight = character:FindFirstChild("DamageHighlight")
+            if damageHighlight then
+                damageHighlight.OutlineTransparency = 0
+                damageHighlight.DepthMode = "AlwaysOnTop"
+                if characterName == "MAD JESTER" or characterName == "MIRROH" then
+                    damageHighlight.OutlineColor = Color3.new(255, 85, 0)
+                else
+                    damageHighlight.OutlineColor = Color3.new(12, 255, 48)
+                end
+            end
+        end
+    end
+end
+
+-- Event işleyiciler
+button.MouseButton1Click:Connect(function()
+    if button.Text == "On" then
+        button.Text = "Off"
+        -- Fonksiyonları düzenli aralıklarla çağırma
+        while button.Text == "Off" do
+            SetDamageHighlights()
+            SetSpawnedMobsDamageHighlights()
+            SetSpecialCharactersDamageHighlights()
+            wait(1)
+        end
+    else
+        button.Text = "On"
+    end
+end)
